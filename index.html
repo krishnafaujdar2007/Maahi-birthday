@@ -95,8 +95,8 @@
         .film-track {
             display: flex;
             width: max-content;
-            /* 25 seconds for a full loop, linear for smooth constant speed */
-            animation: scrollFilm 25s linear infinite;
+            /* Adjusted to 15s since there are fewer photos now */
+            animation: scrollFilm 15s linear infinite;
         }
 
         /* Pause animation on hover if user wants to see a photo clearly */
@@ -288,12 +288,11 @@
             const track = document.getElementById('slide-track');
             let imagesHTML = '';
             
-            // Generate 10 photos HTML block
-            // Completely removed alt, onerror, and star characters. Only pure img tag.
-            for(let i = 1; i <= 10; i++) {
+            // Loop for 5 photos directly in the same folder
+            for(let i = 1; i <= 5; i++) {
                 imagesHTML += `
                     <div class="slide">
-                        <img src="photos/pic${i}.jpg" />
+                        <img src="pic${i}.jpg" />
                     </div>
                 `;
             }
