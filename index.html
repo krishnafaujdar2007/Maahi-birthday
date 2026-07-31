@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Maahi!</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&family=Playfair+Display:ital,wght@0,600;1,700&display=swap" rel="stylesheet">
     <style>
+        /* Aesthetic Base Styles */
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #0f172a; /* Slate 900 */
-            color: white;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #1a1921; /* Soft Dark Aesthetic Background */
+            color: #fdfbf7; /* Soft Cream Text */
             overflow: hidden;
             margin: 0;
             padding: 0;
@@ -18,6 +19,11 @@
             height: 100vh;
         }
 
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Scene Transitions */
         .scene {
             position: absolute;
             inset: 0;
@@ -29,8 +35,7 @@
             padding: 1.5rem;
             opacity: 0;
             pointer-events: none;
-            /* Faster scene transitions */
-            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; 
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out; 
         }
 
         .scene.active {
@@ -40,74 +45,268 @@
         }
 
         .zoom-scene {
-            transform: scale(0.8);
+            transform: scale(0.9);
         }
 
+        /* Word by Word Animation */
         .word {
             display: inline-block;
-            transition: color 0.2s ease, transform 0.2s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            margin: 0 4px;
         }
 
-        .highlight-1 { color: #f43f5e; transform: scale(1.15); } 
-        .highlight-2 { color: #3b82f6; transform: scale(1.15); } 
-        .highlight-3 { color: #10b981; transform: scale(1.15); } 
-        .highlight-4 { color: #f59e0b; transform: scale(1.15); } 
-        .highlight-5 { color: #d946ef; transform: scale(1.15); } 
+        .word.show-word {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        /* Film Strip Styles */
-        .film-strip {
+        /* Aesthetic Colors */
+        .color-rose { color: #f4aab9; } /* Pastel Rose */
+        .color-blue { color: #a4c8e1; } /* Pastel Blue */
+        .color-gold { color: #e8d5a5; } /* Soft Gold */
+        .color-mint { color: #a9d4c6; } /* Soft Mint */
+
+        /* Continuous Film Strip Animation */
+        .film-container {
+            width: 100%;
+            overflow: hidden;
             background-color: #111;
-            padding: 20px 10px;
+            padding: 25px 0;
             position: relative;
-            width: 95%; /* Responsive */
-            max-width: 450px;
-            border-radius: 8px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
         }
-        @media (min-width: 768px) {
-            .film-strip { padding: 25px 15px; }
-        }
-        
-        .film-strip::before, .film-strip::after {
+
+        /* Film strip holes effect */
+        .film-container::before, .film-container::after {
             content: "";
             position: absolute;
             left: 0; right: 0;
-            height: 12px;
-            background-image: linear-gradient(to right, transparent 40%, #fff 40%);
-            background-size: 20px 100%;
-            opacity: 0.8;
+            height: 10px;
+            background-image: linear-gradient(to right, transparent 30%, #e5e5e5 30%, #e5e5e5 70%, transparent 70%);
+            background-size: 24px 100%;
+            opacity: 0.6;
+            z-index: 10;
         }
-        .film-strip::before { top: 4px; }
-        .film-strip::after { bottom: 4px; }
+        .film-container::before { top: 6px; }
+        .film-container::after { bottom: 6px; }
 
-        .slide-track {
+        .film-track {
             display: flex;
-            /* SLOWER photo transition (1.2s instead of 0.8s) */
-            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            width: max-content;
+            /* 30 seconds for a full loop, linear for smooth constant speed */
+            animation: scrollFilm 25s linear infinite;
         }
+
+        /* Pause animation on hover if user wants to see a photo clearly */
+        .film-track:hover {
+            animation-play-state: paused;
+        }
+
         .slide {
-            min-width: 100%;
-            padding: 0 5px;
+            width: 260px; /* Fixed width for each photo */
+            flex-shrink: 0;
+            padding: 0 8px;
             box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
-        .font-pacifico { font-family: 'Pacifico', cursive; }
+        @media (min-width: 768px) {
+            .slide { width: 320px; padding: 0 12px; }
+        }
+
+        .slide img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border: 3px solid #fdfbf7;
+            border-radius: 4px;
+            filter: sepia(20%) contrast(110%); /* Slight aesthetic vintage filter */
+        }
+        
+        @media (min-width: 768px) {
+            .slide img { height: 250px; }
+        }
+
+        @keyframes scrollFilm {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } 
+            /* Moves exactly half the track width (which contains original + duplicate photos) for seamless loop */
+        }
+
+        /* Typography specials */
+        .font-dancing { 
+            font-family: 'Dancing Script', cursive; 
+        }
         .glow-text {
-            text-shadow: 0 0 10px rgba(236, 72, 153, 0.8), 0 0 20px rgba(236, 72, 153, 0.5);
+            text-shadow: 0 0 15px rgba(244, 170, 185, 0.6), 0 0 25px rgba(244, 170, 185, 0.4);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #f4aab9, #e8d5a5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
 <body>
 
     <!-- Start Button -->
-    <div id="start-screen" class="absolute inset-0 flex items-center justify-center bg-slate-900 z-50 transition-opacity duration-300">
-        <button onclick="startExperience()" class="px-6 py-3 md:px-8 md:py-4 bg-pink-500 text-white rounded-full font-bold text-lg md:text-xl shadow-lg shadow-pink-500/50 hover:bg-pink-600 transition-all transform hover:scale-105">
-            Tap to Open Surprise 🎁
+    <div id="start-screen" class="absolute inset-0 flex items-center justify-center bg-[#1a1921] z-50 transition-opacity duration-700">
+        <button onclick="startExperience()" class="px-8 py-3 bg-[#f4aab9] text-[#1a1921] rounded-full font-bold text-lg md:text-xl shadow-lg hover:bg-[#e8d5a5] transition-all transform hover:scale-105 tracking-wide">
+            Open Surprise ✧
         </button>
     </div>
+
+    <!-- Scene 1: What is the date Today -->
+    <div id="scene-1" class="scene">
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold leading-relaxed flex flex-wrap justify-center items-center">
+            <span class="word" id="w1">What</span> 
+            <span class="word" id="w2">is</span> 
+            <span class="word" id="w3">the</span> 
+            <span class="word color-rose" id="w4">date</span> 
+            <span class="word color-gold" id="w5">Today?</span>
+        </h1>
+    </div>
+
+    <!-- Scene 2: Thinking Emoji -->
+    <div id="scene-2" class="scene zoom-scene">
+        <div class="text-7xl sm:text-8xl md:text-9xl animate-pulse">🤔</div>
+    </div>
+
+    <!-- Scene 3: 1 August 2026 -->
+    <div id="scene-3" class="scene zoom-scene">
+        <h1 class="text-4xl sm:text-6xl md:text-7xl font-bold gradient-text drop-shadow-lg text-center w-full px-2 italic">
+            1 August 2026
+        </h1>
+    </div>
+
+    <!-- Scene 4: Annoying Girl -->
+    <div id="scene-4" class="scene">
+        <h2 class="text-2xl sm:text-4xl md:text-5xl leading-relaxed px-4 max-w-3xl mx-auto">
+            Today is the birthday of the <br>
+            <span class="color-gold italic font-bold">most annoying girl</span> 🙄
+        </h2>
+    </div>
+
+    <!-- Scene 5: Guess the Name -->
+    <div id="scene-5" class="scene zoom-scene">
+        <h2 class="text-3xl sm:text-5xl md:text-6xl font-bold color-blue px-4">
+            The name of the girl is?
+        </h2>
+    </div>
+
+    <!-- Scene 6: Maahi -->
+    <div id="scene-6" class="scene zoom-scene">
+        <h1 class="text-7xl sm:text-8xl md:text-9xl font-dancing color-rose glow-text tracking-widest">
+            Maahi
+        </h1>
+    </div>
+
+    <!-- Scene 7: Hindi Message -->
+    <div id="scene-7" class="scene">
+        <h2 class="text-xl sm:text-3xl md:text-4xl font-semibold leading-relaxed px-4 color-mint max-w-2xl mx-auto font-sans">
+            Oye pagal ladki,<br> ye dekh tere kuch annoying photos 📸😂
+        </h2>
+    </div>
+
+    <!-- Scene 8: Film Slideshow -->
+    <div id="scene-8" class="scene" style="padding: 0;">
+        <h3 class="font-dancing color-gold text-3xl mb-6">Memories...</h3>
+        <div class="film-container">
+            <div id="slide-track" class="film-track">
+                <!-- Images will be injected here via JS -->
+            </div>
+        </div>
+        <p class="mt-8 color-rose text-sm md:text-base animate-pulse tracking-widest uppercase font-bold">Happy Birthday! 🎂</p>
+    </div>
+
+    <script>
+        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+        const show = (id) => document.getElementById(id).classList.add('active');
+        const hide = (id) => document.getElementById(id).classList.remove('active');
+
+        async function startExperience() {
+            // Smoothly hide start screen
+            const startScreen = document.getElementById('start-screen');
+            startScreen.style.opacity = '0';
+            await sleep(700);
+            startScreen.style.display = 'none';
+
+            // --- Scene 1: Words appear one by one ---
+            show('scene-1');
+            await sleep(400); 
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`w${i}`).classList.add('show-word');
+                await sleep(350); // Delay between each word appearing
+            }
+            await sleep(1500); // Hold reading time
+            hide('scene-1');
+            await sleep(800);
+
+            // --- Scene 2: Thinking ---
+            show('scene-2');
+            await sleep(1500);
+            hide('scene-2');
+            await sleep(800);
+
+            // --- Scene 3: Date ---
+            show('scene-3');
+            await sleep(2000);
+            hide('scene-3');
+            await sleep(800);
+
+            // --- Scene 4: Annoying Girl ---
+            show('scene-4');
+            await sleep(2500);
+            hide('scene-4');
+            await sleep(800);
+
+            // --- Scene 5: Guess ---
+            show('scene-5');
+            await sleep(2000);
+            hide('scene-5');
+            await sleep(800);
+
+            // --- Scene 6: Maahi ---
+            show('scene-6');
+            await sleep(2800);
+            hide('scene-6');
+            await sleep(800);
+
+            // --- Scene 7: Hindi Msg ---
+            show('scene-7');
+            await sleep(3000);
+            hide('scene-7');
+            await sleep(800);
+
+            // --- Scene 8: Film Slideshow ---
+            initSlideshow();
+            show('scene-8');
+        }
+
+        function initSlideshow() {
+            const track = document.getElementById('slide-track');
+            let imagesHTML = '';
+            
+            // Generate 10 photos HTML block
+            for(let i = 1; i <= 10; i++) {
+                const errorFallback = `this.onerror=null; this.outerHTML='<div style="height:200px; display:flex; align-items:center; justify-content:center; border:3px solid #fdfbf7; background:#222; color:#888;">Pic ${i}</div>'`;
+                imagesHTML += `
+                    <div class="slide">
+                        <img src="photos/pic${i}.jpg" onerror="${errorFallback}" alt="Photo ${i}" />
+                    </div>
+                `;
+            }
+
+            // DUPLICATE the photos to create a seamless infinite marquee effect
+            // Total 20 photos in the track (1-10, then 1-10 again)
+            track.innerHTML = imagesHTML + imagesHTML;
+        }
+    </script>
+</body>
+</html>
+
+
 
     <!-- Scene 1: What is the date Today -->
     <div id="scene-1" class="scene">
